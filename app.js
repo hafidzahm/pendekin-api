@@ -24,7 +24,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.json({
     message: "Welcome to Shortener API (pendekin API)",
-    docs: "https://github.com/hafidzahm/pendekin-api",
+    repo: "https://github.com/hafidzahm/pendekin-api",
     postman_docs: "https://pendekin-api.hafizh.web.id/r/pendekin-postman-docs",
   });
 });
