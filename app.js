@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
   res.json({
     message: "Welcome to Shortener API (pendekin API)",
     docs: "https://github.com/hafidzahm/pendekin-api",
-    postman_docs: "https://pendekin-api.hafizh.web.id/pendekin-postman-docs",
+    postman_docs: "https://pendekin-api.hafizh.web.id/r/pendekin-postman-docs",
   });
 });
 app.post("/api/users", UserController.registerUser);
