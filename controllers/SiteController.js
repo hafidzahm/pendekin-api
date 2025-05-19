@@ -30,12 +30,9 @@ class SiteController {
       }
       //kalo ada redirect ke original link
       const { original_site } = findedLink;
-      res.redirect(original_site);
       findedLink.click_count += 1;
       await findedLink.save();
-      return res
-        .status(200)
-        .json({ message: `Redirected to ${original_site}` });
+      return res.status(308).redirect(original_site);
     } catch (error) {
       next(error);
     }
@@ -48,7 +45,7 @@ class SiteController {
       console.log(findedLink);
       return res.status(200).json({ findedLink });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -58,7 +55,7 @@ class SiteController {
       const findedSite = await Site.findOne({ where: { id: linkId } });
       console.log(findedSite);
       await findedSite.destroy();
-      res.status(200).json({ message: "Link deleted successfully" });
+      return res.status(200).json({ message: "Link deleted successfully" });
     } catch (error) {
       next(error);
     }
