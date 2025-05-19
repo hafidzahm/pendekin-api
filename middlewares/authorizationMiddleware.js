@@ -14,7 +14,9 @@ async function authorizationMiddleware(req, res, next) {
 
     console.log(findedLink);
 
-    const userIdFromLink = findedLink.userId;
+    const userIdFromLink = findedLink.UserId;
+    console.log(userLoginId, userIdFromLink, "<---comparison ID");
+
     if (userLoginId !== userIdFromLink) {
       throw { name: "Forbidden", message: "Forbidden access" };
     }

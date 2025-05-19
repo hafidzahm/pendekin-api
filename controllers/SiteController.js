@@ -57,6 +57,8 @@ class SiteController {
       const { linkId } = req.params;
       const findedSite = await Site.findOne({ where: { id: linkId } });
       console.log(findedSite);
+      await findedSite.destroy();
+      res.status(200).json({ message: "Link deleted successfully" });
     } catch (error) {
       next(error);
     }
