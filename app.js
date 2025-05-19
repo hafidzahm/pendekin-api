@@ -5,7 +5,14 @@ const SiteController = require("./controllers/SiteController");
 const authenticationMiddleware = require("./middlewares/authenticationMiddleware");
 const authorizationMiddleware = require("./middlewares/authorizationMiddleware");
 const app = express();
+const cors = require("cors");
 const port = 3000;
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -16,22 +23,22 @@ app.get("/", (req, res) => {
     docs: "https://github.com/hafidzahm/pendekin-api",
   });
 });
-app.post("/users", UserController.registerUser);
-app.post("/login", UserController.loginUser);
-app.get("/redirect/:shortId", SiteController.redirectLink);
+app.post("/api/users", UserController.registerUser);
+app.post("/api/login", UserController.loginUser);
+app.get("/r/:shortId", SiteController.redirectLink);
 // ===============
 app.use(authenticationMiddleware);
-app.post("/test", (req, res) => {
+app.post("/api/test", (req, res) => {
   res.json({
     message: "Middleware auth",
   });
 });
-app.post("/shorts", SiteController.createShorterLink);
+app.post("/api/shorts", SiteController.createShorterLink);
 // getAllLink by user login
-app.get("/links", SiteController.getLinkByUserId);
+app.get("/api/links", SiteController.getLinkByUserId);
 // delete link by user login (need middleware)
 app.delete(
-  "/link/:linkId",
+  "/api/link/:linkId",
   authorizationMiddleware,
   SiteController.deleteLinkById
 );
