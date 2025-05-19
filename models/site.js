@@ -22,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          notEmpty: true,
+          notEmpty: {
+            msg: `shorted_site required`,
+          },
         },
       },
       original_site: {
@@ -30,7 +32,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          notEmpty: true,
+          notEmpty: {
+            msg: `original_site required`,
+          },
+          isUrl: {
+            msg: `original_site must be an url`,
+          },
         },
       },
 

@@ -48,9 +48,12 @@ class UserController {
       if (!isTheSamePassword) {
         throw { name: "Unauthorized", message: "Invalid email / password" };
       }
-
+      console.log(findedUser.id, "<----userId");
       // kalo pwdnya sama bikin token
-      const access_token = createToken({ email: findedUser.email });
+      const access_token = createToken({
+        id: findedUser.id,
+        email: findedUser.email,
+      });
 
       return res.status(200).json({ access_token });
     } catch (error) {
