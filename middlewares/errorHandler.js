@@ -15,6 +15,11 @@ function errorHandler(error, req, res, next) {
   if (error.name === "Unauthorized") {
     return res.status(401).json({ message: error.message });
   }
+  if (error.name === "JsonWebTokenError") {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  return res.status(500).json({ message: "Internal server error" });
 }
 
 module.exports = errorHandler;

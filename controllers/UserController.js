@@ -1,6 +1,7 @@
 const { compareSync } = require("bcryptjs");
 const { User } = require("../models");
 const { createToken } = require("../helpers/jwt");
+const timeFormatLog = require("../helpers/timeFormatLog");
 class UserController {
   static async registerUser(req, res, next) {
     try {
@@ -8,9 +9,12 @@ class UserController {
       const { name, email, password } = req.body;
       //   console.log(User);
       const user = await User.create({ name, email, password });
-      //   console.log(user);
+      console.log(
+        `=== User with email ${user.email} created at ${timeFormatLog()} ===`
+      );
       return await res.status(201).json({
-        message: `User ${user.name} created sucessfully`,
+        name: user.name,
+        email: user.email,
       });
     } catch (error) {
       //   console.log(error);

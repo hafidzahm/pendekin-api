@@ -1,6 +1,7 @@
 const express = require("express");
 const UserController = require("./controllers/UserController");
 const errorHandler = require("./middlewares/errorHandler");
+const authorizationMiddleware = require("./middlewares/authorizationMiddleware");
 const app = express();
 const port = 3000;
 
@@ -14,6 +15,12 @@ app.get("/", (req, res) => {
 });
 app.post("/users", UserController.registerUser);
 app.post("/login", UserController.loginUser);
+app.use(authorizationMiddleware);
+app.get("/test", (req, res) => {
+  res.json({
+    message: "Middleware auth",
+  });
+});
 
 app.use(errorHandler);
 
