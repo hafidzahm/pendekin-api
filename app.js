@@ -12,7 +12,8 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Shortener API",
+    message: "Welcome to Shortener API (pendekin API)",
+    docs: "https://github.com/hafidzahm/pendekin-api",
   });
 });
 app.post("/users", UserController.registerUser);
