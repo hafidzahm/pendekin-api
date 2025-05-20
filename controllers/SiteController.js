@@ -22,31 +22,31 @@ class SiteController {
 
   static async redirectLink(req, res, next) {
     try {
-      const { shortId } = req.params;
+      const { linkSlug } = req.params;
 
       // Check if the original link exists in Redis
-      const originalLinkFromRedis = await redis.get(shortId);
+      const originalLinkFromRedis = await redis.get(linkSlug);
       if (originalLinkFromRedis) {
-        console.log(`${shortId} -> ${originalLinkFromRedis}`);
+        console.log(`${linkSlug} -> ${originalLinkFromRedis}`);
         console.log(`===FETCHING FROM REDIS=== | ${timeFormatLog()}`);
 
         // redirect;
         res.status(308).redirect(originalLinkFromRedis);
         //add counter
-        await SiteController.findSlugAndAddCounter(shortId);
+        await SiteController.findSlugAndAddCounter(linkSlug);
         return;
       } else {
         // If not found in Redis, fetch from the database
-        const slugData = await SiteController.findSlugAndAddCounter(shortId);
+        const slugData = await SiteController.findSlugAndAddCounter(linkSlug);
 
         if (slugData && slugData.original_site) {
           const { original_site } = slugData;
-          console.log(`${shortId} -> ${original_site}`);
+          console.log(`${linkSlug} -> ${original_site}`);
           console.log(`===FETCHING FROM DB=== | ${timeFormatLog()}`);
 
           // Save the original site to Redis for future requests
-          await redis.set(shortId, original_site);
-          console.log(`${shortId} | ${original_site} saved to Redis`);
+          await redis.set(linkSlug, original_site);
+          console.log(`${linkSlug} | ${original_site} saved to Redis`);
 
           // Redirect to the original link
           return res.status(308).redirect(original_site);
@@ -60,10 +60,10 @@ class SiteController {
     }
   }
 
-  static async findSlugAndAddCounter(shortId) {
+  static async findSlugAndAddCounter(linkSlug) {
     try {
       const findedLink = await Site.findOne({
-        where: { shorted_site: shortId },
+        where: { shorted_site: linkSlug },
       });
 
       if (!findedLink) {

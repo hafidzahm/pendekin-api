@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 });
 app.post("/api/users", UserController.registerUser);
 app.post("/api/login", UserController.loginUser);
-app.get("/r/:shortId", SiteController.redirectLink);
+app.get("/r/:linkSlug", SiteController.redirectLink);
 // ===============
 app.use(authenticationMiddleware);
 app.post("/api/test", (req, res) => {
