@@ -6,8 +6,10 @@ async function authorizationMiddleware(req, res, next) {
       `==========AUTHORIZATION MIDDLEWARE========== | ${timeFormatLog()} `
     );
     const userLoginId = req.user.id;
-    const { linkId } = req.params;
-    const findedLink = await Site.findOne({ where: { id: linkId } });
+    const { linkSlug } = req.params;
+    const findedLink = await Site.findOne({
+      where: { shorted_site: linkSlug },
+    });
     if (!findedLink) {
       throw { name: "Not Found", message: "Link not found" };
     }

@@ -49,10 +49,12 @@ class SiteController {
     }
   }
 
-  static async deleteLinkById(req, res, next) {
+  static async deleteLinkBySlugLink(req, res, next) {
     try {
-      const { linkId } = req.params;
-      const findedSite = await Site.findOne({ where: { id: linkId } });
+      const { linkSlug } = req.params;
+      const findedSite = await Site.findOne({
+        where: { shorted_site: linkSlug },
+      });
       console.log(findedSite);
       await findedSite.destroy();
       return res.status(200).json({ message: "Link deleted successfully" });

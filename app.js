@@ -43,9 +43,9 @@ app.post("/api/shorts", SiteController.createShorterLink);
 app.get("/api/links", SiteController.getLinkByUserId);
 // delete link by user login (need middleware)
 app.delete(
-  "/api/link/:linkId",
+  "/api/link/:linkSlug",
   authorizationMiddleware,
-  SiteController.deleteLinkById
+  SiteController.deleteLinkBySlugLink
 );
 // ================
 app.use(errorHandler);
