@@ -46,6 +46,7 @@ class SiteController {
 
           // Save the original site to Redis for future requests
           await redis.set(linkSlug, original_site);
+          redis.expire(linkSlug, 172800);
           console.log(`${linkSlug} | ${original_site} saved to Redis`);
 
           // Redirect to the original link
