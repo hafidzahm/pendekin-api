@@ -5,7 +5,7 @@ const timeFormatLog = require("../helpers/timeFormatLog");
 class UserController {
   static async registerUser(req, res, next) {
     try {
-      //   console.log(req.body);
+      console.log(req.body);
       const { name, email, password } = req.body;
       //   console.log(User);
       const user = await User.create({ name, email, password });
@@ -17,7 +17,7 @@ class UserController {
         email: user.email,
       });
     } catch (error) {
-      //   console.log(error);
+      console.log(error);
       next(error);
     }
   }
