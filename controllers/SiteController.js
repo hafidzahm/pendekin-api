@@ -87,7 +87,6 @@ class SiteController {
       const { id } = req.user;
       const findedLink = await Site.findAll({ where: { UserId: id } });
       console.log(findedLink);
-      console.log(redis, "<----redis");
       return res.status(200).json({ findedLink });
     } catch (error) {
       next(error);
