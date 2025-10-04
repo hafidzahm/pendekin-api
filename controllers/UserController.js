@@ -55,7 +55,11 @@ class UserController {
         email: findedUser.email,
       });
 
-      return res.status(200).json({ access_token });
+      console.log(findedUser.dataValues.name, "<---- findedUser");
+
+      return res
+        .status(200)
+        .json({ access_token, name: findedUser.dataValues.name });
     } catch (error) {
       next(error);
     }
